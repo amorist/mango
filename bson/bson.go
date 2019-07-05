@@ -49,4 +49,8 @@ type M = primitive.M
 //
 type A = primitive.A
 
+type ObjectID = primitive.ObjectID
+
+var NewObjectID = primitive.NewObjectID()
+
 var Marshal = bson.Marshal

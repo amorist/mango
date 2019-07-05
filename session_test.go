@@ -10,7 +10,7 @@ func TestSession_SetPoolLimit(t *testing.T) {
 		limit uint16
 	}
 	var session *Session
-	session = session.New("mongodb://127.0.0.1")
+	session = New("mongodb://127.0.0.1")
 	tests := []struct {
 		name string
 		s    *Session
@@ -36,11 +36,11 @@ func TestSession_New(t *testing.T) {
 		args args
 		want *Session
 	}{
-		{"new session", session, args{uri: "mongodb://127.0.0.1"}, session.New("mongodb://127.0.0.1")},
+		{"new session", session, args{uri: "mongodb://127.0.0.1"}, New("mongodb://127.0.0.1")},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.s.New(tt.args.uri); !reflect.DeepEqual(got, tt.want) {
+			if got := New(tt.args.uri); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Session.New() = %v, want %v", got, tt.want)
 			}
 		})
@@ -49,7 +49,7 @@ func TestSession_New(t *testing.T) {
 
 func TestSession_Connect(t *testing.T) {
 	var session *Session
-	session = session.New("mongodb://127.0.0.1")
+	session = New("mongodb://127.0.0.1")
 	tests := []struct {
 		name    string
 		s       *Session
@@ -68,12 +68,15 @@ func TestSession_Connect(t *testing.T) {
 }
 
 func TestSession_Ping(t *testing.T) {
+	var session *Session
+	session = New("mongodb://127.0.0.1")
+	session.Connect()
 	tests := []struct {
 		name    string
 		s       *Session
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{"ping", session, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -121,6 +124,27 @@ func TestSession_One(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.One(tt.args.result); (err != nil) != tt.wantErr {
 				t.Errorf("Session.One() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestSession_All(t *testing.T) {
+	type args struct {
+		result []interface{}
+	}
+	tests := []struct {
+		name    string
+		s       *Session
+		args    args
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := tt.s.All(tt.args.result); (err != nil) != tt.wantErr {
+				t.Errorf("Session.All() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
