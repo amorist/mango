@@ -59,7 +59,7 @@ func main() {
         fmt.Println(err)
     }
 
-    // Update UpdateAll
+    // Update update all
     info, err := session.DB("test").Collection("persons").UpdateAll(bson.M{"name": "name1"}, bson.M{"$set": bson.M{"name": "name"}})
     if err != nil {
         fmt.Println(err)
@@ -81,7 +81,7 @@ func main() {
         fmt.Println(err)
     }
 
-    // Insert
+    // InsertAll
     var docs []interface{}
     for index := 0; index < 10; index++ {
         docs = append(docs, bson.M{"name": index})
