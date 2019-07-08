@@ -1,4 +1,4 @@
-# mango [mongo-go-driver](https://github.com/mongodb/mongo-go-driver)  toolkit for golang
+# mango: [mongo-go-driver](https://github.com/mongodb/mongo-go-driver)  toolkit for golang
 
 ## Usage
 
