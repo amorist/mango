@@ -1,6 +1,8 @@
 package bson
 
 import (
+	"encoding/hex"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -49,8 +51,21 @@ type M = primitive.M
 //
 type A = primitive.A
 
+// ObjectID primitive.ObjectID
 type ObjectID = primitive.ObjectID
 
+// NewObjectID primitive.NewObjectID()
 var NewObjectID = primitive.NewObjectID()
 
+// Marshal bson.Marshal
 var Marshal = bson.Marshal
+
+// IsObjectIDHex returns whether s is a valid hex representation of
+// an ObjectId. See the ObjectIdHex function.
+func IsObjectIDHex(s string) bool {
+	if len(s) != 24 {
+		return false
+	}
+	_, err := hex.DecodeString(s)
+	return err == nil
+}
