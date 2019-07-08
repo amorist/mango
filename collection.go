@@ -108,3 +108,16 @@ func (c *Collection) RemoveAll(selector interface{}) error {
 	}
 	return nil
 }
+
+// Count count
+func (c *Collection) Count(selector interface{}) (int64, error) {
+	if selector == nil {
+		selector = bson.D{}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	var err error
+	var count int64
+	count, err = c.collection.CountDocuments(ctx, selector)
+	return count, err
+}
