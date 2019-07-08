@@ -1,6 +1,6 @@
 # mango
 
-like [mgo](https://github.com/globalsign/mgo) but use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver)
+use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver) like [mgo](https://github.com/globalsign/mgo)
 
 - [Installation](#installation)
 - [Usage](#usage)
