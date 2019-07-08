@@ -109,7 +109,6 @@ func (s *Session) All(result interface{}) error {
 			return err
 		}
 		slicev = reflect.Append(slicev, elemp.Elem())
-		slicev = slicev.Slice(0, slicev.Cap())
 		i++
 	}
 	resultv.Elem().Set(slicev.Slice(0, i))
