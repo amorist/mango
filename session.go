@@ -20,9 +20,9 @@ type Session struct {
 	uri         string
 	m           sync.RWMutex
 	filter      interface{}
-	limit       int64
+	limit       *int64
 	project     interface{}
-	skip        int64
+	skip        *int64
 	sort        interface{}
 }
 
@@ -91,13 +91,13 @@ func (s *Session) DB(db string) *Database {
 
 // Limit limit
 func (s *Session) Limit(limit int64) *Session {
-	s.limit = limit
+	s.limit = &limit
 	return s
 }
 
 // Skip Skip
 func (s *Session) Skip(skip int64) *Session {
-	s.skip = skip
+	s.skip = &skip
 	return s
 }
 
@@ -134,11 +134,25 @@ func (s *Session) All(result interface{}) error {
 
 	slicev = slicev.Slice(0, slicev.Cap())
 	elemt := slicev.Type().Elem()
-
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	var err error
-	cur, err := s.collection.Find(ctx, s.filter)
+
+	opt := options.Find()
+
+	if s.sort != nil {
+		opt.SetSort(s.sort)
+	}
+
+	if s.limit != nil {
+		opt.SetLimit(*s.limit)
+	}
+
+	if s.skip != nil {
+		opt.SetSkip(*s.skip)
+	}
+
+	cur, err := s.collection.Find(ctx, s.filter, opt)
 	defer cur.Close(ctx)
 	if err != nil {
 		return err
