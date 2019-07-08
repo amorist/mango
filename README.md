@@ -8,13 +8,9 @@ like [mgo](https://github.com/globalsign/mgo) but use [mongo-go-driver](https://
 - [Usage](#usage)
 - [Doc](#doc)
 
--------------------------
-
 ## installation
 
 `go get -u github.com/amorist/mango`
-
--------------------------
 
 ## usage
 
@@ -28,7 +24,6 @@ if err != nil {
     fmt.Println(err)
 }
 ```
--------------------------
 
 ## doc
 
