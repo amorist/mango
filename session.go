@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 // Session mongo session
@@ -41,7 +42,7 @@ func (s *Session) SetDB(db string) {
 	s.m.Unlock()
 }
 
-// C returns collection
+// C Collection alias
 func (s *Session) C(collection string) *Collection {
 	if len(s.db) == 0 {
 		s.db = "test"
@@ -79,12 +80,16 @@ func (s *Session) Connect() error {
 	return nil
 }
 
-// Ping -
+// Ping verifies that the client can connect to the topology.
+// If readPreference is nil then will use the client's default read
+// preference.
 func (s *Session) Ping() error {
-	return s.Ping()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	return s.client.Ping(ctx, readpref.Primary())
 }
 
-// DB db
+// DB returns a value representing the named database.
 func (s *Session) DB(db string) *Database {
 	return &Database{database: s.client.Database(db)}
 }
