@@ -2,8 +2,6 @@
 
 like [mgo](https://github.com/globalsign/mgo) but use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver)
 
--------------------------
-
 - [Installation](#installation)
 - [Usage](#usage)
 - [Doc](#doc)
