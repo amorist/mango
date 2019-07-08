@@ -28,6 +28,7 @@ type Session struct {
 }
 
 // New session
+//
 // Relevant documentation:
 //
 // 		https://docs.mongodb.com/manual/reference/connection-string/
