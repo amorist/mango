@@ -16,6 +16,7 @@ type Session struct {
 	client      *mongo.Client
 	collection  *mongo.Collection
 	maxPoolSize uint16
+	db          string
 	uri         string
 	m           sync.RWMutex
 	filter      interface{}
@@ -31,6 +32,31 @@ func New(uri string) *Session {
 		uri: uri,
 	}
 	return session
+}
+
+// SetDB set db
+func (s *Session) SetDB(db string) {
+	s.m.Lock()
+	s.db = db
+	s.m.Unlock()
+}
+
+// C returns collection
+func (s *Session) C(collection string) *Collection {
+	if len(s.db) == 0 {
+		s.db = "test"
+	}
+	d := &Database{database: s.client.Database(s.db)}
+	return &Collection{collection: d.database.Collection(collection)}
+}
+
+// Collection returns collection
+func (s *Session) Collection(collection string) *Collection {
+	if len(s.db) == 0 {
+		s.db = "test"
+	}
+	d := &Database{database: s.client.Database(s.db)}
+	return &Collection{collection: d.database.Collection(collection)}
 }
 
 // SetPoolLimit set maxPoolSize
@@ -61,6 +87,24 @@ func (s *Session) Ping() error {
 // DB db
 func (s *Session) DB(db string) *Database {
 	return &Database{database: s.client.Database(db)}
+}
+
+// Limit limit
+func (s *Session) Limit(limit int64) *Session {
+	s.limit = limit
+	return s
+}
+
+// Skip Skip
+func (s *Session) Skip(skip int64) *Session {
+	s.skip = skip
+	return s
+}
+
+// Sort sort
+func (s *Session) Sort(sort interface{}) *Session {
+	s.sort = sort
+	return s
 }
 
 // One find one
