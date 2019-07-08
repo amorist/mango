@@ -1,5 +1,7 @@
 # mango
 
+![mango](./logo/mango.svg)
+
 use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver) like [mgo](https://github.com/globalsign/mgo)
 
 - [Installation](#installation)
