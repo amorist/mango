@@ -29,7 +29,8 @@ type Session struct {
 
 // New session
 // Relevant documentation:
-// https://docs.mongodb.com/manual/reference/connection-string/
+//
+// 		https://docs.mongodb.com/manual/reference/connection-string/
 func New(uri string) *Session {
 	session := &Session{
 		uri: uri,
