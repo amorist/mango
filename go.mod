@@ -1,4 +1,4 @@
-module mango
+module github.com/amorist/mango
 
 go 1.12
 

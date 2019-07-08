@@ -2,8 +2,9 @@ package mango
 
 import (
 	"context"
-	"mango/bson"
 	"time"
+
+	"github.com/amorist/mango/bson"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
