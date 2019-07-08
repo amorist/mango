@@ -2,7 +2,11 @@
 
 ![mango](./logo/mango.svg)
 
-use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver) like [mgo](https://github.com/globalsign/mgo)
+Use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver) like [mgo](https://github.com/globalsign/mgo)
+
+Why named mango?
+
+产品妹子：你们常说的芒果db是什么
 
 - [Installation](#installation)
 - [Usage](#usage)
