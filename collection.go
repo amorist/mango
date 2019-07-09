@@ -7,6 +7,7 @@ import (
 	"github.com/amorist/mango/bson"
 
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // Collection mongo-driver collection
@@ -42,7 +43,7 @@ func (c *Collection) InsertAll(documents []interface{}) error {
 }
 
 // Update update one
-func (c *Collection) Update(selector interface{}, update interface{}) error {
+func (c *Collection) Update(selector interface{}, update interface{}, upsert ...bool) error {
 	if selector == nil {
 		selector = bson.D{}
 	}
@@ -50,7 +51,14 @@ func (c *Collection) Update(selector interface{}, update interface{}) error {
 	defer cancel()
 	var err error
 
-	if _, err = c.collection.UpdateOne(ctx, selector, update); err != nil {
+	opt := options.Update()
+	for _, arg := range upsert {
+		if arg {
+			opt.SetUpsert(arg)
+		}
+	}
+
+	if _, err = c.collection.UpdateOne(ctx, selector, update, opt); err != nil {
 		return err
 	}
 	return nil
@@ -62,15 +70,23 @@ func (c *Collection) UpdateID(id interface{}, update interface{}) error {
 }
 
 // UpdateAll update all
-func (c *Collection) UpdateAll(selector interface{}, update interface{}) (*mongo.UpdateResult, error) {
+func (c *Collection) UpdateAll(selector interface{}, update interface{}, upsert ...bool) (*mongo.UpdateResult, error) {
 	if selector == nil {
 		selector = bson.D{}
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	var err error
+
+	opt := options.Update()
+	for _, arg := range upsert {
+		if arg {
+			opt.SetUpsert(arg)
+		}
+	}
+
 	var updateResult *mongo.UpdateResult
-	if updateResult, err = c.collection.UpdateMany(ctx, selector, update); err != nil {
+	if updateResult, err = c.collection.UpdateMany(ctx, selector, update, opt); err != nil {
 		return updateResult, err
 	}
 	return updateResult, nil
