@@ -1,6 +1,10 @@
 # mango
 
-![mango](./logo/mango.svg)
+<div align="center">
+<img src="./logo/mango.svg" width = "150" alt="图片名称"/>
+</div>
+
+[![GoDoc](https://godoc.org/github.com/amorist/mango?status.svg)](https://godoc.org/github.com/amorist/mango)
 
 Use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver) like [mgo](https://github.com/globalsign/mgo)
 
