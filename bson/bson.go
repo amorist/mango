@@ -57,6 +57,9 @@ type ObjectID = primitive.ObjectID
 // NewObjectID primitive.NewObjectID()
 var NewObjectID = primitive.NewObjectID()
 
+// ObjectIDHex primitive.ObjectIDFromHex
+var ObjectIDHex = primitive.ObjectIDFromHex
+
 // Marshal bson.Marshal
 var Marshal = bson.Marshal
 
