@@ -94,6 +94,11 @@ func (s *Session) Ping() error {
 	return s.client.Ping(ctx, readpref.Primary())
 }
 
+// Client return mongo Client
+func (s *Session) Client() *mongo.Client {
+	return s.client
+}
+
 // DB returns a value representing the named database.
 func (s *Session) DB(db string) *Database {
 	return &Database{database: s.client.Database(db)}
