@@ -21,7 +21,7 @@ jobs:
     - stage: build
       if: type = pull_request
       before_install: skip
-      script: go build -
+      script: go build -v
     - stage: test
       if: type = pull_request
       before_install: skip
