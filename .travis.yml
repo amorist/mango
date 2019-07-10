@@ -1,6 +1,6 @@
 language: go
 go:
-  - 1.11.x
+  - 1.12.x
 
 env:
   - GO111MODULE=on
@@ -21,7 +21,7 @@ jobs:
         script: >-
           go get github.com/myii/maintainer &&
           maintainer contributor &&
-          npm install @semantic-release/changelog@3 -D &&
-          npm install @semantic-release/exec@3 -D &&
-          npm install @semantic-release/git@7 -D &&
-          npx semantic-release@15
+          npm install @semantic-release/changelog -D &&
+          npm install @semantic-release/exec -D &&
+          npm install @semantic-release/git -D &&
+          npx semantic-release
