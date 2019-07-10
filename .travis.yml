@@ -1,10 +1,11 @@
 dist: trusty
+sudo: false
 language: go
 go:
   - 1.12.x
 
 env:
-  - GO111MODULE=on
+  - GO111MODULE=off
 
 script: go get -t -v ./...
 
