@@ -4,6 +4,9 @@ language: go
 go:
   - 1.12.x
 
+env:
+  - GO111MODULE=on
+
 script:
   - go build 
   - go test -v
