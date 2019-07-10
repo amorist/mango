@@ -18,9 +18,13 @@ install:
 
 jobs:
   include:
+    - stage: test
+      if: type = pull_request
+      before_install: skip
+      script: go test -v
     # Define the release stage that runs semantic-release
     - stage: release
-      if: branch = master
+      if: branch = master AND type = push
       language: node_js
       node_js: lts/*
       before_install: skip
