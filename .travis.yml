@@ -6,11 +6,7 @@ go:
 env:
   - GO111MODULE=on
 
-install:
-  - export GOPATH=$HOME/gopath/src/github.com/amorist/mango
-  - cd src/github.com/amorist/mango && go install && go test && cd -
-
-script: go get github.com/amorist/mango && go test -v
+script: go test -v ./...
 
 jobs:
   include:
@@ -21,7 +17,7 @@ jobs:
       node_js: lts/*
       before_install: skip
       # Advanced: optionally overwrite your default `script` step to skip the tests
-      script: install
+      script: go test -v ./...
       deploy:
         provider: script
         skip_cleanup: true
