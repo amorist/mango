@@ -5,12 +5,21 @@ go:
   - 1.12.x
 
 env:
+ global:
   - GO111MODULE=on
 
-install:
-  - export GOPATH=$HOME/gopath/src/github.com/amorist/mango
-  - export PATH=$PATH:$HOME/gopath/src/github.com/amorist/mango
-  - go get -t -v ./...
+cache:
+ directories:
+  - $HOME/.cache/go-build
+  - $HOME/gopath/pkg/mod
+
+go_import_path: github.com/amorist/mango
+
+install: go get -t -v ./...
+
+branches:
+  only:
+    - master
 
 jobs:
   include:
