@@ -18,6 +18,10 @@ install:
 
 jobs:
   include:
+    - stage: build
+      if: type = pull_request
+      before_install: skip
+      script: go build -
     - stage: test
       if: type = pull_request
       before_install: skip
