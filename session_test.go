@@ -52,18 +52,29 @@ func TestSession_C(t *testing.T) {
 	type args struct {
 		collection string
 	}
+	session := New("mongodb://127.0.0.1")
+	if err := session.Connect(); err != nil {
+		t.Errorf("session.Connect() = %v", err)
+	}
 	tests := []struct {
 		name string
 		s    *Session
 		args args
-		want *Collection
+		want string
 	}{
-		// TODO: Add test cases.
+		{"c1", session, args{collection: "test1"}, "test1"},
+		{"c2", session, args{collection: "test2"}, "test2"},
+		{"c3", session, args{collection: "test3"}, "test3"},
+		{"c4", session, args{collection: "test4"}, "test4"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.s.C(tt.args.collection); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Session.C() = %v, want %v", got, tt.want)
+			got := tt.s.C(tt.args.collection)
+			if got == nil {
+				t.Errorf("Session.C() = %v", "set collection fail")
+			}
+			if got.collection.Name() != tt.want {
+				t.Errorf("Session.C() = %v", "set collection fail")
 			}
 		})
 	}
@@ -73,18 +84,29 @@ func TestSession_Collection(t *testing.T) {
 	type args struct {
 		collection string
 	}
+	session := New("mongodb://127.0.0.1")
+	if err := session.Connect(); err != nil {
+		t.Errorf("session.Connect() = %v", err)
+	}
 	tests := []struct {
 		name string
 		s    *Session
 		args args
-		want *Collection
+		want string
 	}{
-		// TODO: Add test cases.
+		{"c1", session, args{collection: "test1"}, "test1"},
+		{"c2", session, args{collection: "test2"}, "test2"},
+		{"c3", session, args{collection: "test3"}, "test3"},
+		{"c4", session, args{collection: "test4"}, "test4"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.s.Collection(tt.args.collection); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Session.Collection() = %v, want %v", got, tt.want)
+			got := tt.s.Collection(tt.args.collection)
+			if got == nil {
+				t.Errorf("Session.C() = %v", "set collection fail")
+			}
+			if got.collection.Name() != tt.want {
+				t.Errorf("Session.C() = %v", "set collection fail")
 			}
 		})
 	}
