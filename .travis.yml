@@ -7,6 +7,8 @@ go:
 env:
   - GO111MODULE=on
 
+services: mongodb
+
 script:
   - go build 
   - go test -v
