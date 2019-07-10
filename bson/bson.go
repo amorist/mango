@@ -1,9 +1,7 @@
 package bson
 
 import (
-	"bytes"
 	"encoding/hex"
-	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -54,21 +52,7 @@ type M = primitive.M
 type A = primitive.A
 
 // ObjectID primitive.ObjectID
-type ObjectID [12]byte
-
-// Hex returns the hex encoding of the ObjectID as a string.
-func (id ObjectID) Hex() string {
-	return hex.EncodeToString(id[:])
-}
-
-func (id ObjectID) String() string {
-	return fmt.Sprintf("ObjectID(%q)", id.Hex())
-}
-
-// IsZero returns true if id is the empty ObjectID.
-func (id ObjectID) IsZero() bool {
-	return bytes.Equal(id[:], primitive.NilObjectID[:])
-}
+type ObjectID = primitive.ObjectID
 
 // NewObjectID primitive.NewObjectID()
 var NewObjectID = primitive.NewObjectID()
