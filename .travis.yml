@@ -22,8 +22,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script: >-
-          go get github.com/myii/maintainer &&
-          maintainer contributor &&
           npm install @semantic-release/changelog -D &&
           npm install @semantic-release/exec -D &&
           npm install @semantic-release/git -D &&
