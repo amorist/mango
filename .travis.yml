@@ -1,3 +1,4 @@
+dist: trusty
 language: go
 go:
   - 1.12.x
@@ -6,6 +7,8 @@ env:
   - GO111MODULE=on
 
 install: true
+
+script: go get github.com/amorist/mango && go test -v
 
 jobs:
   include:
@@ -17,7 +20,7 @@ jobs:
       before_install: skip
       # Advanced: optionally overwrite your default `script` step to skip the tests
       script:
-        - echo "skipping tests"
+        - go get github.com/amorist/mango && go test -v
       deploy:
         provider: script
         skip_cleanup: true
