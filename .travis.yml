@@ -4,10 +4,6 @@ language: go
 go:
   - 1.12.x
 
-env:
- global:
-  - GO111MODULE=on
-
 cache:
  directories:
   - $HOME/.cache/go-build
@@ -15,7 +11,11 @@ cache:
 
 go_import_path: github.com/amorist/mango
 
-install: go get -t -v ./...
+script:
+  - env GO111MODULE=on go build
+  - env GO111MODULE=on go test
+
+install: true
 
 branches:
   only:
