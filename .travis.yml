@@ -1,0 +1,27 @@
+language: go
+go:
+  - 1.11.x
+
+env:
+  - GO111MODULE=on
+
+install: true
+
+jobs:
+  include:
+    # Define the release stage that runs semantic-release
+    - stage: release
+      if: type = push
+      language: node_js
+      node_js: lts/*
+      before_install: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: >-
+          go get github.com/myii/maintainer &&
+          maintainer contributor &&
+          npm install @semantic-release/changelog@3 -D &&
+          npm install @semantic-release/exec@3 -D &&
+          npm install @semantic-release/git@7 -D &&
+          npx semantic-release@15
