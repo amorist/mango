@@ -64,14 +64,14 @@ func (s *Session) Collection(collection string) *Collection {
 	return &Collection{collection: d.database.Collection(collection)}
 }
 
-// SetPoolLimit set maxPoolSize
+// SetPoolLimit specifies the max size of a server's connection pool.
 func (s *Session) SetPoolLimit(limit uint16) {
 	s.m.Lock()
 	s.maxPoolSize = limit
 	s.m.Unlock()
 }
 
-// Connect mongo
+// Connect mongo client
 func (s *Session) Connect() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -104,25 +104,27 @@ func (s *Session) DB(db string) *Database {
 	return &Database{database: s.client.Database(db)}
 }
 
-// Limit limit
+// Limit specifies a limit on the number of results.
+// A negative limit implies that only 1 batch should be returned.
 func (s *Session) Limit(limit int64) *Session {
 	s.limit = &limit
 	return s
 }
 
-// Skip Skip
+// Skip specifies the number of documents to skip before returning.
+// For server versions < 3.2, this defaults to 0.
 func (s *Session) Skip(skip int64) *Session {
 	s.skip = &skip
 	return s
 }
 
-// Sort sort
+// Sort specifies the order in which to return documents.
 func (s *Session) Sort(sort interface{}) *Session {
 	s.sort = sort
 	return s
 }
 
-// One find one
+// One returns up to one document that matches the model.
 func (s *Session) One(result interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()

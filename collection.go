@@ -20,7 +20,7 @@ func (c *Collection) Find(filter interface{}) *Session {
 	return &Session{filter: filter, collection: c.collection}
 }
 
-// Insert one
+// Insert inserts a single document into the collection.
 func (c *Collection) Insert(document interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -31,7 +31,7 @@ func (c *Collection) Insert(document interface{}) error {
 	return nil
 }
 
-// InsertAll all
+// InsertAll inserts the provided documents.
 func (c *Collection) InsertAll(documents []interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -42,7 +42,7 @@ func (c *Collection) InsertAll(documents []interface{}) error {
 	return nil
 }
 
-// Update update one
+// Update updates a single document in the collection.
 func (c *Collection) Update(selector interface{}, update interface{}, upsert ...bool) error {
 	if selector == nil {
 		selector = bson.D{}
@@ -64,12 +64,12 @@ func (c *Collection) Update(selector interface{}, update interface{}, upsert ...
 	return nil
 }
 
-// UpdateID update by id
+// UpdateID updates a single document in the collection by id
 func (c *Collection) UpdateID(id interface{}, update interface{}) error {
 	return c.Update(bson.M{"_id": id}, update)
 }
 
-// UpdateAll update all
+// UpdateAll updates multiple documents in the collection.
 func (c *Collection) UpdateAll(selector interface{}, update interface{}, upsert ...bool) (*mongo.UpdateResult, error) {
 	if selector == nil {
 		selector = bson.D{}
@@ -92,7 +92,7 @@ func (c *Collection) UpdateAll(selector interface{}, update interface{}, upsert 
 	return updateResult, nil
 }
 
-// Remove by selector
+// Remove deletes a single document from the collection.
 func (c *Collection) Remove(selector interface{}) error {
 	if selector == nil {
 		selector = bson.D{}
@@ -106,12 +106,12 @@ func (c *Collection) Remove(selector interface{}) error {
 	return nil
 }
 
-// RemoveID remove by id
+// RemoveID deletes a single document from the collection by id.
 func (c *Collection) RemoveID(id interface{}) error {
 	return c.Remove(id)
 }
 
-// RemoveAll remove all
+// RemoveAll deletes multiple documents from the collection.
 func (c *Collection) RemoveAll(selector interface{}) error {
 	if selector == nil {
 		selector = bson.D{}
@@ -126,7 +126,7 @@ func (c *Collection) RemoveAll(selector interface{}) error {
 	return nil
 }
 
-// Count count
+// Count gets the number of documents matching the filter.
 func (c *Collection) Count(selector interface{}) (int64, error) {
 	if selector == nil {
 		selector = bson.D{}
