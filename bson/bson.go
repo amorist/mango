@@ -54,8 +54,8 @@ type A = primitive.A
 // ObjectID primitive.ObjectID
 type ObjectID = primitive.ObjectID
 
-// NewObjectID primitive.NewObjectID()
-var NewObjectID = primitive.NewObjectID()
+// NewObjectID primitive.NewObjectID
+var NewObjectID = primitive.NewObjectID
 
 // ObjectIDHex primitive.ObjectIDFromHex
 var ObjectIDHex = primitive.ObjectIDFromHex
