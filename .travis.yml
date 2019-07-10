@@ -4,22 +4,12 @@ language: go
 go:
   - 1.12.x
 
-cache:
- directories:
-  - $HOME/.cache/go-build
-  - $HOME/gopath/pkg/mod
-
-go_import_path: github.com/amorist/mango
-
 script:
-  - env GO111MODULE=on go build
-  - env GO111MODULE=on go test
+  - go build 
+  - go test -v
 
-install: true
-
-branches:
-  only:
-    - master
+install:
+  - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=master bash)"
 
 jobs:
   include:
@@ -30,7 +20,7 @@ jobs:
       node_js: lts/*
       before_install: skip
       # Advanced: optionally overwrite your default `script` step to skip the tests
-      script: install
+      script: go test -v
       deploy:
         provider: script
         skip_cleanup: true
