@@ -1,5 +1,12 @@
 # Mango Versioning Changelog
 
+## [0.1.2](https://github.com/amorist/mango/compare/v0.1.1...v0.1.2) (2019-07-10)
+
+
+### Bug Fixes
+
+* **type bson.ObjectID:** fix bson.ObjectID type aliases ([05daabc](https://github.com/amorist/mango/commit/05daabc))
+
 ## [0.1.1](https://github.com/amorist/mango/compare/v0.1.0...v0.1.1) (2019-07-10)
 
 
