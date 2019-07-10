@@ -31,6 +31,14 @@ func (c *Collection) Insert(document interface{}) error {
 	return nil
 }
 
+// InsertWithResult inserts a single document into the collection and returns insert one result.
+func (c *Collection) InsertWithResult(document interface{}) (result *mongo.InsertOneResult, err error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	result, err = c.collection.InsertOne(ctx, document)
+	return
+}
+
 // InsertAll inserts the provided documents.
 func (c *Collection) InsertAll(documents []interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -40,6 +48,14 @@ func (c *Collection) InsertAll(documents []interface{}) error {
 		return err
 	}
 	return nil
+}
+
+// InsertAllWithResult inserts the provided documents and returns insert many result.
+func (c *Collection) InsertAllWithResult(documents []interface{}) (result *mongo.InsertManyResult, err error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	result, err = c.collection.InsertMany(ctx, documents)
+	return
 }
 
 // Update updates a single document in the collection.
@@ -62,6 +78,25 @@ func (c *Collection) Update(selector interface{}, update interface{}, upsert ...
 		return err
 	}
 	return nil
+}
+
+// UpdateWithResult updates a single document in the collection and returns update result.
+func (c *Collection) UpdateWithResult(selector interface{}, update interface{}, upsert ...bool) (result *mongo.UpdateResult, err error) {
+	if selector == nil {
+		selector = bson.D{}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	opt := options.Update()
+	for _, arg := range upsert {
+		if arg {
+			opt.SetUpsert(arg)
+		}
+	}
+
+	result, err = c.collection.UpdateOne(ctx, selector, update, opt)
+	return
 }
 
 // UpdateID updates a single document in the collection by id
