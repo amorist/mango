@@ -6,7 +6,7 @@ go:
 env:
   - GO111MODULE=on
 
-script: go test -v ./...
+script: go get -t -v ./...
 
 jobs:
   include:
@@ -17,7 +17,7 @@ jobs:
       node_js: lts/*
       before_install: skip
       # Advanced: optionally overwrite your default `script` step to skip the tests
-      script: go test -v ./...
+      script: go get -t -v ./...
       deploy:
         provider: script
         skip_cleanup: true
