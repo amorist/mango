@@ -26,19 +26,4 @@ jobs:
       if: type = pull_request
       before_install: skip
       script: go test -v
-    # Define the release stage that runs semantic-release
-    - stage: release
-      if: branch = master AND type = push
-      language: node_js
-      node_js: lts/*
-      before_install: skip
-      # Advanced: optionally overwrite your default `script` step to skip the tests
-      script: go test -v
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script: >-
-          npm install @semantic-release/changelog -D &&
-          npm install @semantic-release/exec -D &&
-          npm install @semantic-release/git -D &&
-          npx semantic-release
+
