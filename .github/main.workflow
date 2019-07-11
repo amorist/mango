@@ -1,20 +1,15 @@
-# Workflow to create distribution archive
-    workflow "Create Archive" {
-        on = "push"
-        resolves = ["archive"]
-    }
+workflow "Deploy Release" {
+  on = "push"
+  resolves = [" Github Create Release"]
+}
 
-    # Filter for tag
-    action "tag" {
-        uses = "actions/bin/filter@master"
-        args = "tag"
-    }
+action "Filters for Master branch" {
+  uses = "actions/bin/filter@master"
+  args = "branch master"
+}
 
-    # Create Release ZIP archive
-    action "archive" {
-        uses = "lubusIN/actions/archive@master"
-        needs = "tag"
-        env = {
-                ZIP_FILENAME = "archive-filename"
-            }
-    }
+action " Github Create Release" {
+  uses = "frankjuniorr/github-create-release-action@master"
+  needs = ["Filters for Master branch"]
+  secrets = ["GITHUB_TOKEN"]
+}
