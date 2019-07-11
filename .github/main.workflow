@@ -13,6 +13,7 @@
     # Create Release ZIP archive
     action "archive" {
         uses = "lubusIN/actions/archive@master"
+        needs = "tag"
         env = {
                 ZIP_FILENAME = "archive-filename"
             }
