@@ -2,7 +2,6 @@ package mango
 
 import (
 	"context"
-	"time"
 
 	"github.com/amorist/mango/bson"
 
@@ -22,10 +21,8 @@ func (c *Collection) Find(filter interface{}) *Session {
 
 // Insert inserts a single document into the collection.
 func (c *Collection) Insert(document interface{}) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	var err error
-	if _, err = c.collection.InsertOne(ctx, document); err != nil {
+	if _, err = c.collection.InsertOne(context.TODO(), document); err != nil {
 		return err
 	}
 	return nil
@@ -33,18 +30,14 @@ func (c *Collection) Insert(document interface{}) error {
 
 // InsertWithResult inserts a single document into the collection and returns insert one result.
 func (c *Collection) InsertWithResult(document interface{}) (result *mongo.InsertOneResult, err error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	result, err = c.collection.InsertOne(ctx, document)
+	result, err = c.collection.InsertOne(context.TODO(), document)
 	return
 }
 
 // InsertAll inserts the provided documents.
 func (c *Collection) InsertAll(documents []interface{}) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	var err error
-	if _, err = c.collection.InsertMany(ctx, documents); err != nil {
+	if _, err = c.collection.InsertMany(context.TODO(), documents); err != nil {
 		return err
 	}
 	return nil
@@ -52,9 +45,7 @@ func (c *Collection) InsertAll(documents []interface{}) error {
 
 // InsertAllWithResult inserts the provided documents and returns insert many result.
 func (c *Collection) InsertAllWithResult(documents []interface{}) (result *mongo.InsertManyResult, err error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	result, err = c.collection.InsertMany(ctx, documents)
+	result, err = c.collection.InsertMany(context.TODO(), documents)
 	return
 }
 
@@ -63,8 +54,7 @@ func (c *Collection) Update(selector interface{}, update interface{}, upsert ...
 	if selector == nil {
 		selector = bson.D{}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+
 	var err error
 
 	opt := options.Update()
@@ -74,7 +64,7 @@ func (c *Collection) Update(selector interface{}, update interface{}, upsert ...
 		}
 	}
 
-	if _, err = c.collection.UpdateOne(ctx, selector, update, opt); err != nil {
+	if _, err = c.collection.UpdateOne(context.TODO(), selector, update, opt); err != nil {
 		return err
 	}
 	return nil
@@ -85,8 +75,6 @@ func (c *Collection) UpdateWithResult(selector interface{}, update interface{}, 
 	if selector == nil {
 		selector = bson.D{}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 
 	opt := options.Update()
 	for _, arg := range upsert {
@@ -95,7 +83,7 @@ func (c *Collection) UpdateWithResult(selector interface{}, update interface{}, 
 		}
 	}
 
-	result, err = c.collection.UpdateOne(ctx, selector, update, opt)
+	result, err = c.collection.UpdateOne(context.TODO(), selector, update, opt)
 	return
 }
 
@@ -109,8 +97,7 @@ func (c *Collection) UpdateAll(selector interface{}, update interface{}, upsert 
 	if selector == nil {
 		selector = bson.D{}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+
 	var err error
 
 	opt := options.Update()
@@ -121,7 +108,7 @@ func (c *Collection) UpdateAll(selector interface{}, update interface{}, upsert 
 	}
 
 	var updateResult *mongo.UpdateResult
-	if updateResult, err = c.collection.UpdateMany(ctx, selector, update, opt); err != nil {
+	if updateResult, err = c.collection.UpdateMany(context.TODO(), selector, update, opt); err != nil {
 		return updateResult, err
 	}
 	return updateResult, nil
@@ -132,10 +119,8 @@ func (c *Collection) Remove(selector interface{}) error {
 	if selector == nil {
 		selector = bson.D{}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	var err error
-	if _, err = c.collection.DeleteOne(ctx, selector); err != nil {
+	if _, err = c.collection.DeleteOne(context.TODO(), selector); err != nil {
 		return err
 	}
 	return nil
@@ -151,11 +136,9 @@ func (c *Collection) RemoveAll(selector interface{}) error {
 	if selector == nil {
 		selector = bson.D{}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	var err error
 
-	if _, err = c.collection.DeleteMany(ctx, selector); err != nil {
+	if _, err = c.collection.DeleteMany(context.TODO(), selector); err != nil {
 		return err
 	}
 	return nil
@@ -166,10 +149,8 @@ func (c *Collection) Count(selector interface{}) (int64, error) {
 	if selector == nil {
 		selector = bson.D{}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	var err error
 	var count int64
-	count, err = c.collection.CountDocuments(ctx, selector)
+	count, err = c.collection.CountDocuments(context.TODO(), selector)
 	return count, err
 }

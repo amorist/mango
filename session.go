@@ -73,11 +73,9 @@ func (s *Session) SetPoolLimit(limit uint16) {
 
 // Connect mongo client
 func (s *Session) Connect() error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	opt := options.Client().ApplyURI(s.uri)
 	opt.SetMaxPoolSize(s.maxPoolSize)
-	client, err := mongo.Connect(ctx, opt)
+	client, err := mongo.Connect(context.TODO(), opt)
 	if err != nil {
 		return err
 	}
@@ -89,9 +87,7 @@ func (s *Session) Connect() error {
 // If readPreference is nil then will use the client's default read
 // preference.
 func (s *Session) Ping() error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	return s.client.Ping(ctx, readpref.Primary())
+	return s.client.Ping(context.TODO(), readpref.Primary())
 }
 
 // Client return mongo Client
@@ -126,10 +122,8 @@ func (s *Session) Sort(sort interface{}) *Session {
 
 // One returns up to one document that matches the model.
 func (s *Session) One(result interface{}) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	var err error
-	data, err := s.collection.FindOne(ctx, s.filter).DecodeBytes()
+	data, err := s.collection.FindOne(context.TODO(), s.filter).DecodeBytes()
 	err = bson.Unmarshal(data, result)
 	return err
 }
@@ -151,7 +145,7 @@ func (s *Session) All(result interface{}) error {
 
 	slicev = slicev.Slice(0, slicev.Cap())
 	elemt := slicev.Type().Elem()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	var err error
 
