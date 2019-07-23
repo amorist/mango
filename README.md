@@ -6,6 +6,7 @@
 [![GoDoc](https://godoc.org/github.com/amorist/mango?status.svg)](https://godoc.org/github.com/amorist/mango)
 [![Build Status](https://dev.azure.com/amorist/mango/_apis/build/status/amorist.mango?branchName=master)](https://dev.azure.com/amorist/mango/_build/latest?definitionId=1&branchName=master)
 [![dependabot](https://api.dependabot.com/badges/status?host=github&repo=amorist/mango)](https://dependabot.com/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Famorist%2Fmango.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Famorist%2Fmango?ref=badge_shield)
 </div>
 
 Use [mongo-go-driver](https://github.com/mongodb/mongo-go-driver) like [mgo](https://github.com/globalsign/mgo)
@@ -105,3 +106,7 @@ func main() {
 ## doc
 
 [mango](https://godoc.org/github.com/amorist/mango)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Famorist%2Fmango.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Famorist%2Fmango?ref=badge_large)
