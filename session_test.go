@@ -114,7 +114,7 @@ func TestSession_Collection(t *testing.T) {
 
 func TestSession_SetPoolLimit(t *testing.T) {
 	type args struct {
-		limit uint16
+		limit uint64
 	}
 	tests := []struct {
 		name string

@@ -16,7 +16,7 @@ import (
 type Session struct {
 	client      *mongo.Client
 	collection  *mongo.Collection
-	maxPoolSize uint16
+	maxPoolSize uint64
 	db          string
 	uri         string
 	m           sync.RWMutex
@@ -65,7 +65,7 @@ func (s *Session) Collection(collection string) *Collection {
 }
 
 // SetPoolLimit specifies the max size of a server's connection pool.
-func (s *Session) SetPoolLimit(limit uint16) {
+func (s *Session) SetPoolLimit(limit uint64) {
 	s.m.Lock()
 	s.maxPoolSize = limit
 	s.m.Unlock()
@@ -73,9 +73,21 @@ func (s *Session) SetPoolLimit(limit uint16) {
 
 // Connect mongo client
 func (s *Session) Connect() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
 	opt := options.Client().ApplyURI(s.uri)
 	opt.SetMaxPoolSize(s.maxPoolSize)
-	client, err := mongo.Connect(context.TODO(), opt)
+
+	client, err := mongo.NewClient(opt)
+	if err != nil {
+		return err
+	}
+
+	err = client.Connect(ctx)
+	if err != nil {
+		return err
+	}
+
 	if err != nil {
 		return err
 	}
