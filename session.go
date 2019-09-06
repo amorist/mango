@@ -136,6 +136,11 @@ func (s *Session) Sort(sort interface{}) *Session {
 func (s *Session) One(result interface{}) error {
 	var err error
 	data, err := s.collection.FindOne(context.TODO(), s.filter).DecodeBytes()
+
+	if err != nil {
+		return err
+	}
+
 	err = bson.Unmarshal(data, result)
 	return err
 }
