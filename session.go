@@ -39,15 +39,10 @@ func New(uri string) *Session {
 	return session
 }
 
-// SetDB set db
-func (s *Session) SetDB(db string) {
-	s.m.Lock()
-	s.db = db
-	s.m.Unlock()
-}
-
 // C Collection alias
 func (s *Session) C(collection string) *Collection {
+	s.m.Lock()
+	defer s.m.Unlock()
 	if len(s.db) == 0 {
 		s.db = "test"
 	}
@@ -57,6 +52,8 @@ func (s *Session) C(collection string) *Collection {
 
 // Collection returns collection
 func (s *Session) Collection(collection string) *Collection {
+	s.m.Lock()
+	defer s.m.Unlock()
 	if len(s.db) == 0 {
 		s.db = "test"
 	}
@@ -67,8 +64,8 @@ func (s *Session) Collection(collection string) *Collection {
 // SetPoolLimit specifies the max size of a server's connection pool.
 func (s *Session) SetPoolLimit(limit uint64) {
 	s.m.Lock()
+	defer s.m.Unlock()
 	s.maxPoolSize = limit
-	s.m.Unlock()
 }
 
 // Connect mongo client
@@ -109,6 +106,8 @@ func (s *Session) Client() *mongo.Client {
 
 // DB returns a value representing the named database.
 func (s *Session) DB(db string) *Database {
+	s.m.Lock()
+	defer s.m.Unlock()
 	return &Database{database: s.client.Database(db)}
 }
 
@@ -136,6 +135,11 @@ func (s *Session) Sort(sort interface{}) *Session {
 func (s *Session) One(result interface{}) error {
 	var err error
 	data, err := s.collection.FindOne(context.TODO(), s.filter).DecodeBytes()
+
+	if err != nil {
+		return err
+	}
+
 	err = bson.Unmarshal(data, result)
 	return err
 }
