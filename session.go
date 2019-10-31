@@ -39,13 +39,6 @@ func New(uri string) *Session {
 	return session
 }
 
-// SetDB set db
-func (s *Session) SetDB(db string) {
-	s.m.Lock()
-	defer s.m.Unlock()
-	s.db = db
-}
-
 // C Collection alias
 func (s *Session) C(collection string) *Collection {
 	s.m.Lock()

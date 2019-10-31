@@ -29,25 +29,6 @@ func TestNew(t *testing.T) {
 	}
 }
 
-func TestSession_SetDB(t *testing.T) {
-	type args struct {
-		db string
-	}
-	session := New("mongodb://127.0.0.1")
-	tests := []struct {
-		name string
-		s    *Session
-		args args
-	}{
-		{"set db", session, args{db: "test"}},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.s.SetDB(tt.args.db)
-		})
-	}
-}
-
 func TestSession_C(t *testing.T) {
 	type args struct {
 		collection string
