@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "21:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: go.mongodb.org/mongo-driver
+    versions:
+    - 1.4.5
+    - 1.4.6
+    - 1.5.0
